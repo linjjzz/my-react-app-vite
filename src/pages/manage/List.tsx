@@ -1,8 +1,16 @@
 import React, { FC, useState } from 'react';
-import QuestionCard from '../../components/QuestionCard';
+import QuestionCard from '@/components/QuestionCard';
+import { Empty, Typography } from 'antd';
+import { useTitle } from 'ahooks';
+
+import type { ListType } from '@/type';
+import ListSearch from '@/components/LIstSearch';
+
+const { Title } = Typography
 
 const List: FC = () => {
-  const [questionList, steQuestionList] = useState([
+  useTitle('问卷星-我的问卷')
+  const [questionList, steQuestionList] = useState<ListType[] | []>([
     {
       id: 'q1',
       title: '问卷1',
@@ -40,15 +48,21 @@ const List: FC = () => {
     <>
       <div className="flex h-[60px] justify-between text-[25px]">
         <div>
-          <div>我的问卷</div>
+          <Title level={3}>我的问卷</Title>
         </div>
-        <div> （搜索） </div>
-      </div>
+        <ListSearch />
+      </div >
       <div>
-        {questionList.length > 0 &&
-          questionList.map((item) => <QuestionCard key={item.id} {...item} />)}
+        {questionList.length > 0 ?
+          <>
+            {questionList.map((item) => <QuestionCard key={item.id} {...item} />)}
+            <div>list page footer</div>
+          </>
+          :
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无数据" />
+        }
       </div>
-      <div>list page footer</div>
+
     </>
   );
 };

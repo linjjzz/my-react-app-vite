@@ -18,7 +18,11 @@
     "strict": true,
     "noUnusedLocals": false,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "paths": {
+      "@/*": ["./src/*"], // 将 @ 指向 src 目录
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

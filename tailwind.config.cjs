@@ -9,5 +9,5 @@ module.exports = {
   corePlugins: {
     // preflight: false, // 添加这一行
   },
-  important: true,
+  // important: true,
 };

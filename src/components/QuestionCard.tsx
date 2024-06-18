@@ -33,6 +33,8 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
     confirm({
       title: '确定删除该问卷?',
       icon: <ExclamationCircleOutlined />,
+      okText: '确定',
+      cancelText: '取消',
       onOk: () => {
         message.success('删除成功');
       },

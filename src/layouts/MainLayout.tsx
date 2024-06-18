@@ -10,7 +10,7 @@ const MainLayout: FC = () => {
   return (
     <>
       <Layout>
-        <Header className="py-[12px]">
+        <Header className="py-[12px] flex justify-between items-center text-[32px]">
           <Logo />
           <UserInfo />
         </Header>
