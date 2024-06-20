@@ -14,7 +14,7 @@ const MainLayout: FC = () => {
           <Logo />
           <UserInfo />
         </Header>
-        <Content className="main-content-mh bg-slate-200">
+        <Content id='main-content' className="main-content-mh bg-slate-200 overflow-auto">
           <Outlet />
         </Content>
         <Footer className="text-center">

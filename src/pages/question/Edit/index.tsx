@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
+import useLoadQuestionData from '@/hooks/useLoadQuestionData';
 
 const Edit: FC = () => {
-  return <div>Edit</div>;
+  const { loading, data, error } = useLoadQuestionData()
+  return <div>Edit: {data?.id}</div>;
 };
 
 export default Edit;

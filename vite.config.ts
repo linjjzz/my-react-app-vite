@@ -10,4 +10,14 @@ export default defineConfig({
     },
   },
   plugins: [react()],
+  server: {
+    proxy: {
+      // 代理所有以 /api 开头的请求
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 })

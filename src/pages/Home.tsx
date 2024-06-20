@@ -1,5 +1,5 @@
 import { Button, Typography } from 'antd';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const { Title, Paragraph } = Typography;
@@ -15,7 +15,7 @@ const Home: FC = () => {
           已累计创建问卷 100 份, 发布问卷 90 份, 收到答卷 980 份
         </Paragraph>
         <Button
-          className="h-[60px] text-[24px]"
+          className="h-[50px] text-[24px]"
           type="primary"
           onClick={() => nav('./manage/list')}
         >

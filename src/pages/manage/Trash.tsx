@@ -1,53 +1,24 @@
 import React, { FC, useState } from 'react';
-import { Typography, Empty, Table, Tag, Space, Button } from 'antd';
+import { Typography, Table, Tag, Space, Button } from 'antd';
 import { useTitle } from 'ahooks';
 
 import type { TableProps } from 'antd';
-import type { DelListType } from '@/type';
+import type { ListType } from '@/services/request';
 import ListSearch from '@/components/LIstSearch';
+import useLoadQuestionListData from '@/hooks/useLoadQuestionListData';
+import LIstPage from '@/components/LIstPage';
 
 const { Title } = Typography
 
-const listData = [
-  {
-    id: 'q1',
-    title: '问卷1',
-    isPublished: false,
-    answerCount: 5,
-    createAt: '2024-05-21 20:46',
-  },
-  {
-    id: 'q2',
-    title: '问卷2',
-    isPublished: true,
-    isStar: true,
-    answerCount: 5,
-    createAt: '2024-05-21 20:46',
-  },
-  {
-    id: 'q3',
-    title: '问卷3',
-    isPublished: false,
-    isStar: false,
-    answerCount: 5,
-    createAt: '2024-05-21 20:46',
-  },
-  {
-    id: 'q4',
-    title: '问卷4',
-    isPublished: true,
-    isStar: true,
-    answerCount: 5,
-    createAt: '2024-05-21 20:46',
-  },
-]
-
 const Trash: FC = () => {
-  useTitle('问卷星-星标问卷')
+  useTitle('问卷星-回收站')
+
+  const { data, loading, error } = useLoadQuestionListData({ isDeleted: true })
+  const { list, total } = data ?? { list: [], total: 0 };
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
-  const columns: TableProps<DelListType>['columns'] = [
+  const columns: TableProps<ListType>['columns'] = [
     {
       title: '标题',
       dataIndex: 'title',
@@ -81,7 +52,7 @@ const Trash: FC = () => {
 
   return (
     <>
-      <div className="flex h-[60px] justify-between text-[25px]">
+      <div className="flex h-[40px] justify-between text-[25px]">
         <div>
           <Title level={3}>星标问卷</Title>
         </div>
@@ -92,12 +63,9 @@ const Trash: FC = () => {
           <Button type="primary">恢复</Button>
           <Button danger>彻底删除</Button>
         </Space>
-        {listData.length > 0 ?
-          <Table columns={columns} dataSource={listData} rowKey={q => q.id} rowSelection={rowSelection} />
-          :
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无数据" />
-        }
-      </div>
+        <Table loading={loading} columns={columns} dataSource={list} rowKey={q => q.id} rowSelection={rowSelection} pagination={false} />
+        {list.length > 0 && <LIstPage total={total} />}
+      </div >
     </>
   );
 };

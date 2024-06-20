@@ -1,3 +1,4 @@
+import { ListType } from '@/services/request';
 import {
   CopyOutlined,
   DeleteOutlined,
@@ -7,21 +8,12 @@ import {
   StarOutlined,
 } from '@ant-design/icons';
 import { Button, Divider, Modal, Popconfirm, Space, Tag, message } from 'antd';
-import React, { FC } from 'react';
+import React, { FC, ElementType } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
-type PropsType = {
-  id: string;
-  title: string;
-  isPublished: boolean;
-  isStar: boolean;
-  answerCount: number;
-  createAt: string;
-};
 
 const { confirm } = Modal;
 
-const QuestionCard: FC<PropsType> = (props: PropsType) => {
+const QuestionCard = (props: ListType) => {
   const { title, isPublished, createAt, id, isStar, answerCount } = props;
   const nav = useNavigate();
 
@@ -42,7 +34,7 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
   };
 
   return (
-    <div className="mt-[10px] bg-white p-[10px]">
+    <div className="mt-[10px] bg-white p-[10px] w-full">
       <div className="flex justify-between">
         <div>
           <Link

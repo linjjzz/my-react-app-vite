@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { Input } from 'antd'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { SEARCH_KEYWORD } from '@/constant';
 
 const { Search } = Input;
 
@@ -12,7 +13,7 @@ const ListSearch: FC = () => {
   const [searchParams] = useSearchParams()
 
   useEffect(() => {
-    const curVal = searchParams.get('keyword') || ''
+    const curVal = searchParams.get(SEARCH_KEYWORD) || undefined
     setValue(curVal)
   }, [searchParams])
 
@@ -23,7 +24,7 @@ const ListSearch: FC = () => {
   const onSearch = (value: string) => {
     nav({
       pathname,
-      search: value === '' ? '' : `keyword=${value}`
+      search: value === '' ? '' : `${SEARCH_KEYWORD}=${value}`
     })
   }
 
