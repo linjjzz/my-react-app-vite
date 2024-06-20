@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react';
-import { Typography, Table, Tag, Space, Button } from 'antd';
-import { useTitle } from 'ahooks';
+import { Typography, Table, Tag, Space, Button, message } from 'antd';
+import { useRequest, useTitle } from 'ahooks';
 
 import type { TableProps } from 'antd';
-import type { ListType } from '@/services/request';
+import { deleteQuestionService, recoverQuestionService, type ListType } from '@/services/request';
 import ListSearch from '@/components/LIstSearch';
 import useLoadQuestionListData from '@/hooks/useLoadQuestionListData';
 import LIstPage from '@/components/LIstPage';
@@ -17,6 +17,47 @@ const Trash: FC = () => {
   const { list, total } = data ?? { list: [], total: 0 };
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
+
+
+  const { loading: dleLoading, run: dle } = useRequest(
+    async () => {
+      if (selectedRowKeys.length == 0) return
+      const data = await deleteQuestionService(selectedRowKeys)
+      return data
+    },
+    {
+      manual: true,
+      onSuccess() {
+        message.success('删除成功');
+      }
+    }
+  )
+
+
+  const { loading: recoverLoading, run: recover } = useRequest(
+    async () => {
+      if (selectedRowKeys.length == 0) return
+      const data = await recoverQuestionService(selectedRowKeys)
+      return data
+    },
+    {
+      manual: true,
+      onSuccess() {
+        message.success('恢复成功');
+      }
+    }
+  )
+
+
+  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
 
   const columns: TableProps<ListType>['columns'] = [
     {
@@ -41,15 +82,6 @@ const Trash: FC = () => {
     },
   ];
 
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-
   return (
     <>
       <div className="flex h-[40px] justify-between text-[25px]">
@@ -60,8 +92,8 @@ const Trash: FC = () => {
       </div >
       <div>
         <Space className="mb-[10px]">
-          <Button type="primary">恢复</Button>
-          <Button danger>彻底删除</Button>
+          <Button type="primary" onClick={recover} disabled={recoverLoading}>恢复</Button>
+          <Button danger onClick={dle} disabled={dleLoading}>彻底删除</Button>
         </Space>
         <Table loading={loading} columns={columns} dataSource={list} rowKey={q => q.id} rowSelection={rowSelection} pagination={false} />
         {list.length > 0 && <LIstPage total={total} />}

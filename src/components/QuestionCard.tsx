@@ -1,4 +1,6 @@
-import { ListType } from '@/services/request';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, Divider, Modal, Popconfirm, Space, Tag, message } from 'antd';
 import {
   CopyOutlined,
   DeleteOutlined,
@@ -7,19 +9,56 @@ import {
   LineChartOutlined,
   StarOutlined,
 } from '@ant-design/icons';
-import { Button, Divider, Modal, Popconfirm, Space, Tag, message } from 'antd';
-import React, { FC, ElementType } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+
+import { ListType, duplicateQuestionService, editQuestionService } from '@/services/request';
+import { useRequest } from 'ahooks';
 
 const { confirm } = Modal;
 
 const QuestionCard = (props: ListType) => {
   const { title, isPublished, createAt, id, isStar, answerCount } = props;
   const nav = useNavigate();
+  const [isStarState, setIsStarState] = useState(isStar);
 
-  const duplicate = () => {
-    message.success('复制成功');
-  };
+  const { loading: isStarChnageLoading, run: isStarOnChnage } = useRequest(
+    async () => {
+      const data = await editQuestionService(id, { isStar: !isStarState })
+      return data
+    },
+    {
+      manual: true,
+      onSuccess() {
+        setIsStarState(!isStarState)
+        message.success('更新完成')
+      }
+    }
+  )
+
+  const { loading: dleLoading, run: dleRun } = useRequest(
+    async () => {
+      const data = await editQuestionService(id, { isDeleted: true })
+      return data
+    },
+    {
+      manual: true,
+      onSuccess() {
+        message.success('删除成功');
+      }
+    }
+  )
+
+  const { loading: duplicateLoading, run: duplicate } = useRequest(
+    async () => {
+      const data = await duplicateQuestionService(id)
+      return data
+    },
+    {
+      manual: true,
+      onSuccess() {
+        message.success('复制成功');
+      }
+    }
+  )
 
   const dle = () => {
     confirm({
@@ -27,9 +66,7 @@ const QuestionCard = (props: ListType) => {
       icon: <ExclamationCircleOutlined />,
       okText: '确定',
       cancelText: '取消',
-      onOk: () => {
-        message.success('删除成功');
-      },
+      onOk: dleRun,
     });
   };
 
@@ -41,7 +78,7 @@ const QuestionCard = (props: ListType) => {
             to={isPublished ? `/question/stat/${id}` : `/question/edit/${id}`}
           >
             <Space>
-              {isStar && <StarOutlined className=" text-red-700" />}
+              {isStarState && <StarOutlined className=" text-red-700" />}
               {title}
             </Space>
           </Link>
@@ -78,14 +115,15 @@ const QuestionCard = (props: ListType) => {
           </Button>
         </Space>
         <Space>
-          <Button type="text" icon={<StarOutlined />} size="small">
-            {isStar ? '取消标星' : '标星'}
+          <Button type="text" icon={<StarOutlined />} size="small" onClick={isStarOnChnage} disabled={isStarChnageLoading}>
+            {isStarState ? '取消标星' : '标星'}
           </Button>
           <Popconfirm
             title="确定复制该问卷"
             okText="确定"
             cancelText="取消"
             onConfirm={duplicate}
+            disabled={duplicateLoading}
           >
             <Button type="text" icon={<CopyOutlined />} size="small">
               复制
@@ -96,6 +134,7 @@ const QuestionCard = (props: ListType) => {
             icon={<DeleteOutlined />}
             size="small"
             onClick={dle}
+            disabled={dleLoading}
           >
             删除
           </Button>
