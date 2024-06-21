@@ -1,7 +1,10 @@
 import React, { FC } from 'react'
-import { Form, Input, Space, Button, Typography, Checkbox } from "antd";
+import { Form, Input, Space, Button, Typography, Checkbox, message } from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
 import { useNavigate } from 'react-router-dom';
+import { useRequest } from 'ahooks';
+import { loginInfo, loginService } from '@/services/request';
+import { setToken } from '@/utils/token';
 
 const { Title } = Typography
 
@@ -18,7 +21,27 @@ const Login: FC = () => {
   const [form] = Form.useForm()
   const nav = useNavigate()
 
-  const onFinish = () => { }
+  const { loading, run: onFinish } = useRequest(
+    async (value: loginInfo) => {
+      const { username, password } = value
+      const loginData: loginInfo = {
+        username,
+        password
+      }
+
+      return await loginService(loginData)
+    },
+    {
+      manual: true,
+      onSuccess: (data) => {
+        const { token } = data
+        setToken(token)
+        message.success('登录成功')
+        nav('/manage/list')
+      }
+    }
+  )
+
 
   return (
     <Form
@@ -57,7 +80,7 @@ const Login: FC = () => {
       </Form.Item> */}
       <Form.Item {...tailLayout}>
         <Space>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" disabled={loading}>
             登录
           </Button>
           <Button type="link" htmlType="button" onClick={() => nav('/register')}>

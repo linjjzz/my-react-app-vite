@@ -1,7 +1,10 @@
 import React, { FC } from 'react'
-import { Form, Input, Space, Button, Typography } from "antd";
+import { Form, Input, Space, Button, Typography, message } from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
 import { useNavigate } from 'react-router-dom';
+import { registInfo, registService } from '@/services/request';
+import { useRequest } from 'ahooks';
+import { ResDataType } from '@/services/http';
 
 const { Title } = Typography
 
@@ -18,7 +21,27 @@ const Register: FC = () => {
   const [form] = Form.useForm()
   const nav = useNavigate()
 
-  const onFinish = () => { }
+  const { loading, run: onFinish } = useRequest(
+    async (value: registInfo) => {
+      const { username, password, nickname } = value
+      const registerData: registInfo = {
+        username,
+        password,
+        nickname
+      }
+
+      return await registService(registerData)
+    },
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success('注册成功')
+        nav('/login')
+      }
+    }
+  )
+
+
 
   return (
     <Form
@@ -36,37 +59,53 @@ const Register: FC = () => {
           </Space>
         </Title>
       </Form.Item>
-      <Form.Item name="useName" label="用户名" rules={[
-        { required: true, message: '请输入用户名' },
-        { type: 'string', min: 5, max: 20, message: '字符长度在5-20之间' },
-        { pattern: /^\w+$/, message: '字母数字下划线' }
-      ]}>
+      <Form.Item
+        name="useName"
+        label="用户名"
+        rules={[
+          { required: true, message: '请输入用户名' },
+          { type: 'string', min: 5, max: 20, message: '字符长度在5-20之间' },
+          { pattern: /^\w+$/, message: '字母数字下划线' }
+        ]}
+      >
         <Input />
       </Form.Item>
-      <Form.Item name="password" label="密码" rules={[{ required: true }]}>
-        <Input.Password />
-      </Form.Item>
-      <Form.Item name="confirm" label="确认密码" dependencies={['password']} rules={[
-        { required: true },
-        ({ getFieldValue }) => ({
-          validator(_, value) {
-            if (!value || getFieldValue('password') === value) {
-              return Promise.resolve()
-            } else {
-              return Promise.reject(new Error('两次密码不一致'))
-            }
-          }
-        })
-      ]}
+      <Form.Item
+        name="password"
+        label="密码"
+        rules={[{ required: true }]}
       >
         <Input.Password />
       </Form.Item>
-      <Form.Item name="nickname" label="昵称" rules={[{ required: true }]}>
+      <Form.Item
+        name="confirm"
+        label="确认密码"
+        dependencies={['password']}
+        rules={[
+          { required: true },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue('password') === value) {
+                return Promise.resolve()
+              } else {
+                return Promise.reject(new Error('两次密码不一致'))
+              }
+            }
+          })
+        ]}
+      >
+        <Input.Password />
+      </Form.Item>
+      <Form.Item
+        name="nickname"
+        label="昵称"
+        rules={[{ required: true }]}
+      >
         <Input />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" disabled={loading}>
             注册
           </Button>
           <Button type="link" htmlType="button" onClick={() => nav('/login')}>

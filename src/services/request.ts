@@ -1,6 +1,7 @@
 import React from "react";
 import { ResDataType, http } from "./http";
 
+// 问卷
 // 列表
 export async function getQuestionListService(opt: Partial<searchOption>): Promise<questionData> {
   const data = await http.get<questionData>(`/api/question`, { params: opt })
@@ -43,6 +44,28 @@ export async function duplicateQuestionService(id: string): Promise<ResDataType>
   return data
 }
 
+
+// 用户
+// 用户信息
+// 复制
+export async function getUserInfoService(): Promise<ResDataType> {
+  const data = await http.get<ResDataType>(`/api/user/info`)
+  return data
+}
+
+// 登录
+export async function loginService(body: loginInfo): Promise<ResDataType> {
+  const data = await http.post<ResDataType>(`/api/user/login`, body)
+  return data
+}
+
+// 注册
+export async function registService(body: registInfo): Promise<ResDataType> {
+  const data = await http.post<ResDataType>(`/api/user/register`, body)
+  return data
+}
+
+
 // type
 export type searchOption = {
   keyword: string
@@ -65,3 +88,15 @@ export type ListType = {
   answerCount: number;
   createAt: string;
 };
+
+export type loginInfo = {
+  username: string
+  password: string
+}
+
+
+export type registInfo = {
+  username: string
+  password: string
+  nickname: string
+}

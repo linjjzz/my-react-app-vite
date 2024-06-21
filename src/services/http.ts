@@ -1,3 +1,4 @@
+import { getToken } from '@/utils/token';
 import { message } from 'antd';
 import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosRequestConfig } from 'axios';
 
@@ -10,6 +11,7 @@ const service: AxiosInstance = axios.create({
 service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     // 在请求发送之前进行一些处理，例如添加请求头
+    config.headers['Authorization'] = `Bearer ${getToken()}`
     return config;
   },
   (error: any) => {
