@@ -1,9 +1,9 @@
-import { FormOutlined } from '@ant-design/icons';
-import { Space, Typography } from 'antd';
-import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { FormOutlined } from '@ant-design/icons'
+import { Space, Typography } from 'antd'
+import React, { FC } from 'react'
+import { Link } from 'react-router-dom'
 
-const { Title } = Typography;
+const { Title } = Typography
 
 const Logo: FC = () => {
   return (
@@ -15,7 +15,7 @@ const Logo: FC = () => {
         </Space>
       </Link>
     </div>
-  );
-};
+  )
+}
 
-export default Logo;
+export default Logo

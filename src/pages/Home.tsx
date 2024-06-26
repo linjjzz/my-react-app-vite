@@ -1,11 +1,11 @@
-import { Button, Typography } from 'antd';
-import React, { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Button, Typography } from 'antd'
+import React, { FC, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const { Title, Paragraph } = Typography;
+const { Title, Paragraph } = Typography
 
 const Home: FC = () => {
-  const nav = useNavigate();
+  const nav = useNavigate()
   return (
     // background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
     <div className="flex h-full flex-col items-center justify-center bg-gradient-to-r from-[#4facfe] to-[#00f2fe]">
@@ -23,7 +23,7 @@ const Home: FC = () => {
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

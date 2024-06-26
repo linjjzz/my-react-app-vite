@@ -1,9 +1,11 @@
-import React from "react";
-import { ResDataType, http } from "./http";
+import React from 'react'
+import { ResDataType, http } from './http'
 
 // 问卷
 // 列表
-export async function getQuestionListService(opt: Partial<searchOption>): Promise<questionData> {
+export async function getQuestionListService(
+  opt: Partial<searchOption>,
+): Promise<questionData> {
   const data = await http.get<questionData>(`/api/question`, { params: opt })
   return data
 }
@@ -21,29 +23,37 @@ export async function createQuestionService(): Promise<ResDataType> {
 }
 
 // 修改
-export async function editQuestionService(id: string, opt: ResDataType): Promise<ResDataType> {
+export async function editQuestionService(
+  id: string,
+  opt: ResDataType,
+): Promise<ResDataType> {
   const data = await http.patch<ResDataType>(`/api/question/${id}`, opt)
   return data
 }
 
 // 批量恢复
-export async function recoverQuestionService(ids: React.Key[]): Promise<ResDataType> {
+export async function recoverQuestionService(
+  ids: React.Key[],
+): Promise<ResDataType> {
   const data = await http.patch<ResDataType>(`/api/question`, ids)
   return data
 }
 
 // 批量删除
-export async function deleteQuestionService(ids: React.Key[]): Promise<ResDataType> {
+export async function deleteQuestionService(
+  ids: React.Key[],
+): Promise<ResDataType> {
   const data = await http.delete<ResDataType>(`/api/question`, { data: ids })
   return data
 }
 
 // 复制
-export async function duplicateQuestionService(id: string): Promise<ResDataType> {
+export async function duplicateQuestionService(
+  id: string,
+): Promise<ResDataType> {
   const data = await http.post<ResDataType>(`/api/question/duplicate/${id}`)
   return data
 }
-
 
 // 用户
 // 用户信息
@@ -65,7 +75,6 @@ export async function registService(body: registInfo): Promise<ResDataType> {
   return data
 }
 
-
 // type
 export type searchOption = {
   keyword: string
@@ -81,19 +90,18 @@ export type questionData = {
 }
 
 export type ListType = {
-  id: string;
-  title: string;
-  isPublished: boolean;
-  isStar?: boolean;
-  answerCount: number;
-  createAt: string;
-};
+  id: string
+  title: string
+  isPublished: boolean
+  isStar?: boolean
+  answerCount: number
+  createAt: string
+}
 
 export type loginInfo = {
   username: string
   password: string
 }
-
 
 export type registInfo = {
   username: string

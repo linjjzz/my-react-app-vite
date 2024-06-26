@@ -1,21 +1,21 @@
+import { ResDataType } from '@/services/http'
+import { registInfo, registService } from '@/services/request'
+import { UserAddOutlined } from '@ant-design/icons'
+import { useRequest } from 'ahooks'
+import { Button, Form, Input, Space, Typography, message } from 'antd'
 import React, { FC } from 'react'
-import { Form, Input, Space, Button, Typography, message } from "antd";
-import { UserAddOutlined } from "@ant-design/icons";
-import { useNavigate } from 'react-router-dom';
-import { registInfo, registService } from '@/services/request';
-import { useRequest } from 'ahooks';
-import { ResDataType } from '@/services/http';
+import { useNavigate } from 'react-router-dom'
 
 const { Title } = Typography
 
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
-};
+}
 
 const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
-};
+}
 
 const Register: FC = () => {
   const [form] = Form.useForm()
@@ -27,7 +27,7 @@ const Register: FC = () => {
       const registerData: registInfo = {
         username,
         password,
-        nickname
+        nickname,
       }
 
       return await registService(registerData)
@@ -37,16 +37,14 @@ const Register: FC = () => {
       onSuccess: () => {
         message.success('注册成功')
         nav('/login')
-      }
-    }
+      },
+    },
   )
-
-
 
   return (
     <Form
       {...layout}
-      className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
+      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform"
       form={form}
       onFinish={onFinish}
       style={{ width: 350 }}
@@ -65,16 +63,12 @@ const Register: FC = () => {
         rules={[
           { required: true, message: '请输入用户名' },
           { type: 'string', min: 5, max: 20, message: '字符长度在5-20之间' },
-          { pattern: /^\w+$/, message: '字母数字下划线' }
+          { pattern: /^\w+$/, message: '字母数字下划线' },
         ]}
       >
         <Input />
       </Form.Item>
-      <Form.Item
-        name="password"
-        label="密码"
-        rules={[{ required: true }]}
-      >
+      <Form.Item name="password" label="密码" rules={[{ required: true }]}>
         <Input.Password />
       </Form.Item>
       <Form.Item
@@ -90,17 +84,13 @@ const Register: FC = () => {
               } else {
                 return Promise.reject(new Error('两次密码不一致'))
               }
-            }
-          })
+            },
+          }),
         ]}
       >
         <Input.Password />
       </Form.Item>
-      <Form.Item
-        name="nickname"
-        label="昵称"
-        rules={[{ required: true }]}
-      >
+      <Form.Item name="nickname" label="昵称" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
       <Form.Item {...tailLayout}>
@@ -113,7 +103,7 @@ const Register: FC = () => {
           </Button>
         </Space>
       </Form.Item>
-    </Form >
+    </Form>
   )
 }
 

@@ -1,12 +1,13 @@
-import React, { FC } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Layout } from 'antd'
+import React, { FC } from 'react'
+import { Outlet } from 'react-router-dom'
 
 const QuestionLayout: FC = () => {
   return (
-    <div>
+    <Layout>
       <Outlet />
-    </div>
-  );
-};
+    </Layout>
+  )
+}
 
-export default QuestionLayout;
+export default QuestionLayout

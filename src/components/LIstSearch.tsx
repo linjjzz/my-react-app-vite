@@ -1,9 +1,9 @@
-import React, { ChangeEvent, FC, useEffect, useState } from 'react';
+import { SEARCH_KEYWORD } from '@/constant'
 import { Input } from 'antd'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { SEARCH_KEYWORD } from '@/constant';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
-const { Search } = Input;
+const { Search } = Input
 
 const ListSearch: FC = () => {
   const [value, setValue] = useState<string>()
@@ -24,11 +24,20 @@ const ListSearch: FC = () => {
   const onSearch = (value: string) => {
     nav({
       pathname,
-      search: value === '' ? '' : `${SEARCH_KEYWORD}=${value}`
+      search: value === '' ? '' : `${SEARCH_KEYWORD}=${value}`,
     })
   }
 
-  return <Search placeholder="请输入关键词" allowClear value={value} onChange={onChange} onSearch={onSearch} style={{ width: 200 }} />;
-};
+  return (
+    <Search
+      placeholder="请输入关键词"
+      allowClear
+      value={value}
+      onChange={onChange}
+      onSearch={onSearch}
+      style={{ width: 200 }}
+    />
+  )
+}
 
-export default ListSearch;
+export default ListSearch

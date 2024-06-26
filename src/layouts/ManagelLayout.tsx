@@ -1,32 +1,41 @@
-import { createQuestionService } from '@/services/request';
+import { createQuestionService } from '@/services/request'
 import {
   BarsOutlined,
   DeleteOutlined,
   PlusOutlined,
   StarOutlined,
-} from '@ant-design/icons';
-import { useRequest } from 'ahooks';
-import { Button, Divider, Space } from 'antd';
-import React, { FC } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+} from '@ant-design/icons'
+import { useRequest } from 'ahooks'
+import { Button, Divider, Space } from 'antd'
+import React, { FC } from 'react'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 const ManagelLayout: FC = () => {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
 
-  const { loading, error, run: create } = useRequest(createQuestionService, {
+  const {
+    loading,
+    error,
+    run: create,
+  } = useRequest(createQuestionService, {
     manual: true,
     onSuccess(result) {
       const { id = '' } = result
       navigate(`/question/edit/${id}`)
-    }
+    },
   })
 
   return (
     <div className="m-auto flex w-[1200px] pt-[24px]">
       <div className="w-[120px]">
         <Space direction="vertical">
-          <Button type="primary" size="large" icon={<PlusOutlined />} onClick={create}>
+          <Button
+            type="primary"
+            size="large"
+            icon={<PlusOutlined />}
+            onClick={create}
+          >
             新建问卷
           </Button>
           <Divider className="border-t-transparent" />
@@ -61,7 +70,7 @@ const ManagelLayout: FC = () => {
         <Outlet />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ManagelLayout;
+export default ManagelLayout

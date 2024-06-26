@@ -1,6 +1,3 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button, Divider, Modal, Popconfirm, Space, Tag, message } from 'antd';
 import {
   CopyOutlined,
   DeleteOutlined,
@@ -8,17 +5,24 @@ import {
   ExclamationCircleOutlined,
   LineChartOutlined,
   StarOutlined,
-} from '@ant-design/icons';
+} from '@ant-design/icons'
+import { Button, Divider, Modal, Popconfirm, Space, Tag, message } from 'antd'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
-import { ListType, duplicateQuestionService, editQuestionService } from '@/services/request';
-import { useRequest } from 'ahooks';
+import {
+  ListType,
+  duplicateQuestionService,
+  editQuestionService,
+} from '@/services/request'
+import { useRequest } from 'ahooks'
 
-const { confirm } = Modal;
+const { confirm } = Modal
 
 const QuestionCard = (props: ListType) => {
-  const { title, isPublished, createAt, id, isStar, answerCount } = props;
-  const nav = useNavigate();
-  const [isStarState, setIsStarState] = useState(isStar);
+  const { title, isPublished, createAt, id, isStar, answerCount } = props
+  const nav = useNavigate()
+  const [isStarState, setIsStarState] = useState(isStar)
 
   const { loading: isStarChnageLoading, run: isStarOnChnage } = useRequest(
     async () => {
@@ -30,8 +34,8 @@ const QuestionCard = (props: ListType) => {
       onSuccess() {
         setIsStarState(!isStarState)
         message.success('更新完成')
-      }
-    }
+      },
+    },
   )
 
   const { loading: dleLoading, run: dleRun } = useRequest(
@@ -42,9 +46,9 @@ const QuestionCard = (props: ListType) => {
     {
       manual: true,
       onSuccess() {
-        message.success('删除成功');
-      }
-    }
+        message.success('删除成功')
+      },
+    },
   )
 
   const { loading: duplicateLoading, run: duplicate } = useRequest(
@@ -55,9 +59,9 @@ const QuestionCard = (props: ListType) => {
     {
       manual: true,
       onSuccess() {
-        message.success('复制成功');
-      }
-    }
+        message.success('复制成功')
+      },
+    },
   )
 
   const dle = () => {
@@ -67,11 +71,11 @@ const QuestionCard = (props: ListType) => {
       okText: '确定',
       cancelText: '取消',
       onOk: dleRun,
-    });
-  };
+    })
+  }
 
   return (
-    <div className="mt-[10px] bg-white p-[10px] w-full">
+    <div className="mt-[10px] w-full bg-white p-[10px]">
       <div className="flex justify-between">
         <div>
           <Link
@@ -115,7 +119,13 @@ const QuestionCard = (props: ListType) => {
           </Button>
         </Space>
         <Space>
-          <Button type="text" icon={<StarOutlined />} size="small" onClick={isStarOnChnage} disabled={isStarChnageLoading}>
+          <Button
+            type="text"
+            icon={<StarOutlined />}
+            size="small"
+            onClick={isStarOnChnage}
+            disabled={isStarChnageLoading}
+          >
             {isStarState ? '取消标星' : '标星'}
           </Button>
           <Popconfirm
@@ -141,7 +151,7 @@ const QuestionCard = (props: ListType) => {
         </Space>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default QuestionCard;
+export default QuestionCard

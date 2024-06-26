@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useState } from 'react';
+import { PAGE_SIZE, SEARCH_PAGE, SEARCH_PAGE_SIZE } from '@/constant'
 import { Pagination } from 'antd'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { PAGE_SIZE, SEARCH_PAGE, SEARCH_PAGE_SIZE } from '@/constant';
+import React, { FC, useEffect, useState } from 'react'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 type propsType = {
   total: number
@@ -18,7 +18,8 @@ const LIstPage: FC<propsType> = (props) => {
   useEffect(() => {
     const page = parseInt(searchParams.get(SEARCH_PAGE) || '') || 1
     setCurrent(page)
-    const pageSize = parseInt(searchParams.get(SEARCH_PAGE_SIZE) || '') || PAGE_SIZE
+    const pageSize =
+      parseInt(searchParams.get(SEARCH_PAGE_SIZE) || '') || PAGE_SIZE
     setPageSize(pageSize)
   }, [searchParams])
 
@@ -30,13 +31,20 @@ const LIstPage: FC<propsType> = (props) => {
     searchParams.set(SEARCH_PAGE_SIZE, pageSize.toString())
     nav({
       pathname,
-      search: searchParams.toString()
+      search: searchParams.toString(),
     })
   }
 
-  return <div className='p-[10px] flex justify-end'>
-    <Pagination current={current} pageSize={pageSize} total={total} onChange={onchange} />
-  </div>
-};
+  return (
+    <div className="flex justify-end p-[10px]">
+      <Pagination
+        current={current}
+        pageSize={pageSize}
+        total={total}
+        onChange={onchange}
+      />
+    </div>
+  )
+}
 
-export default LIstPage;
+export default LIstPage

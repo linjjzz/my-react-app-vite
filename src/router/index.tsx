@@ -1,18 +1,18 @@
-import React from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import React from 'react'
+import { createBrowserRouter } from 'react-router-dom'
 
-import MainLayout from '../layouts/MainLayout';
-import ManagelLayout from '../layouts/ManagelLayout';
-import QuestionLayout from '../layouts/QuestionLayout';
-import Home from '../pages/Home';
-import Login from '../pages/Login';
-import NotFound from '../pages/NotFound';
-import Register from '../pages/Register';
-import List from '../pages/manage/List';
-import Star from '../pages/manage/Star';
-import Trash from '../pages/manage/Trash';
-import Edit from '../pages/question/Edit';
-import Stat from '../pages/question/Stat';
+import MainLayout from '../layouts/MainLayout'
+import ManagelLayout from '../layouts/ManagelLayout'
+import QuestionLayout from '../layouts/QuestionLayout'
+import Home from '../pages/Home'
+import Login from '../pages/Login'
+import NotFound from '../pages/NotFound'
+import Register from '../pages/Register'
+import List from '../pages/manage/List'
+import Star from '../pages/manage/Star'
+import Trash from '../pages/manage/Trash'
+import Edit from '../pages/question/Edit'
+import Stat from '../pages/question/Stat'
 
 const router = createBrowserRouter([
   {
@@ -69,6 +69,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+])
 
-export default router;
+export default router
