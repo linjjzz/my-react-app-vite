@@ -19,7 +19,7 @@ function EditToolbar() {
     selectedId,
     copyComponent,
     copiedComponent,
-    pasteComponent
+    pasteComponent,
   } = useComponentInfoStore()
 
   const [isLocked, setIsLocked] = useState(

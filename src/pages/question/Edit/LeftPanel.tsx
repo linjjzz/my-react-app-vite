@@ -3,9 +3,7 @@ import { Tabs } from 'antd'
 import React from 'react'
 import ComponentLib from './ComponentLib'
 
-type Props = {}
-
-const LeftPanel = (props: Props) => {
+const LeftPanel = () => {
   const tabsItem = [
     {
       key: 'componentLib',

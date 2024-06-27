@@ -1,6 +1,6 @@
 import { type ComponentPropsType } from '@/components/questionComponents'
-import { create } from 'zustand'
 import { nanoid } from 'nanoid'
+import { create } from 'zustand'
 import { getNextSelectedId } from './utils'
 
 export type ComponentInfoType = {
@@ -77,10 +77,7 @@ export const useComponentInfoStore = create<ComponentStateType>((set) => ({
       const newComponentList = componentList.filter(
         (c) => c.fe_id !== selectedId,
       )
-      const newSelectedId = getNextSelectedId(
-        selectedId,
-        componentList,
-      )
+      const newSelectedId = getNextSelectedId(selectedId, componentList)
       return { componentList: newComponentList, selectedId: newSelectedId }
     }),
   chnageComponentHidden: () =>
@@ -93,10 +90,7 @@ export const useComponentInfoStore = create<ComponentStateType>((set) => ({
           isHidden: !c.isHidden,
         }
       })
-      const newSelectedId = getNextSelectedId(
-        selectedId,
-        componentList,
-      )
+      const newSelectedId = getNextSelectedId(selectedId, componentList)
       return { componentList: newComponentList, selectedId: newSelectedId }
     }),
   chnageComponentLocked: () =>
@@ -111,18 +105,22 @@ export const useComponentInfoStore = create<ComponentStateType>((set) => ({
       })
       return { componentList: newComponentList }
     }),
-  copyComponent: () => set((state) => {
-    const { componentList, selectedId } = state
-    if (selectedId === '') return state
-    const copiedComponent = componentList.find((c) => c.fe_id === selectedId) as ComponentInfoType
-    return { copiedComponent: copiedComponent }
-  }),
-  pasteComponent: () => set((state) => {
-    const { copiedComponent, addComponent } = state
-    if (copiedComponent == null) return state
-    let newCopiedComponent = { ...copiedComponent, fe_id: nanoid() }
+  copyComponent: () =>
+    set((state) => {
+      const { componentList, selectedId } = state
+      if (selectedId === '') return state
+      const copiedComponent = componentList.find(
+        (c) => c.fe_id === selectedId,
+      ) as ComponentInfoType
+      return { copiedComponent: copiedComponent }
+    }),
+  pasteComponent: () =>
+    set((state) => {
+      const { copiedComponent, addComponent } = state
+      if (copiedComponent == null) return state
+      let newCopiedComponent = { ...copiedComponent, fe_id: nanoid() }
 
-    addComponent(newCopiedComponent)
-    return { selectedId: newCopiedComponent.fe_id }
-  })
+      addComponent(newCopiedComponent)
+      return { selectedId: newCopiedComponent.fe_id }
+    }),
 }))

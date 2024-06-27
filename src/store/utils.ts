@@ -4,7 +4,7 @@ export const getNextSelectedId = (
   fe_id: string,
   componentList: ComponentInfoType[],
 ) => {
-  let newComponentList = componentList.filter(c => !c.isHidden)
+  let newComponentList = componentList.filter((c) => !c.isHidden)
   const index = newComponentList.findIndex((c) => c.fe_id == fe_id)
   if (index < 0) return ''
   let newSelectedId = ''
