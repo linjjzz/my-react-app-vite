@@ -25,18 +25,20 @@ export type ComponentStateType = {
   chnageComponentLocked: () => void
   copyComponent: () => void
   pasteComponent: () => void
+  selectPreComponent: () => void
+  selectNextComponent: () => void
 }
 
 export const useComponentInfoStore = create<ComponentStateType>((set) => ({
   componentList: [],
   selectedId: '',
   copiedComponent: null,
+  changeSelectedId: (id: string) => set(() => ({ selectedId: id })),
   resetComponentInfo: (props: ComponentInfoType[]) =>
     set(() => {
       const selectedId = props?.[0]?.fe_id || ''
       return { componentList: props, selectedId: selectedId }
     }),
-  changeSelectedId: (id: string) => set(() => ({ selectedId: id })),
   addComponent: (newComponent: ComponentInfoType) =>
     set((state) => {
       const { selectedId, componentList } = state
@@ -108,7 +110,7 @@ export const useComponentInfoStore = create<ComponentStateType>((set) => ({
   copyComponent: () =>
     set((state) => {
       const { componentList, selectedId } = state
-      if (selectedId === '') return state
+      if (selectedId === '') return {}
       const copiedComponent = componentList.find(
         (c) => c.fe_id === selectedId,
       ) as ComponentInfoType
@@ -117,10 +119,24 @@ export const useComponentInfoStore = create<ComponentStateType>((set) => ({
   pasteComponent: () =>
     set((state) => {
       const { copiedComponent, addComponent } = state
-      if (copiedComponent == null) return state
+      if (copiedComponent == null) return {}
       let newCopiedComponent = { ...copiedComponent, fe_id: nanoid() }
 
       addComponent(newCopiedComponent)
       return { selectedId: newCopiedComponent.fe_id }
     }),
+  selectPreComponent: () => set((state) => {
+    const { selectedId, componentList } = state
+    const newComponentList = componentList.filter(c => !c.isHidden)
+    const index = newComponentList.findIndex((c) => c.fe_id === selectedId)
+    if (index <= 0) return {}
+    return { selectedId: newComponentList[index - 1].fe_id }
+  }),
+  selectNextComponent: () => set((state) => {
+    const { selectedId, componentList } = state
+    const newComponentList = componentList.filter(c => !c.isHidden)
+    const index = newComponentList.findIndex((c) => c.fe_id === selectedId)
+    if (index < 0 || index === newComponentList.length - 1) return {}
+    return { selectedId: newComponentList[index + 1].fe_id }
+  })
 }))
