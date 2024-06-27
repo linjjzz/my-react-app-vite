@@ -28,21 +28,30 @@ const EditCanvas = () => {
 
   return (
     <div className="min-h-[100%] overflow-hidden bg-white">
-      {componentList.map((item) => {
-        const { fe_id } = item
-        return (
-          <div
-            key={fe_id}
-            onClick={(e) => handleClick(e, fe_id)}
-            className={classNames(
-              'm-[12px] rounded-[3px] border border-[#fff] p-[12px] hover:border-[#d9d9d9]',
-              selectedId == fe_id && '!border-[#1890ff]',
-            )}
-          >
-            <div className="pointer-events-none">{genComponent(item)}</div>
-          </div>
-        )
-      })}
+      {componentList
+        .filter((c) => !c.isHidden)
+        .map((item) => {
+          const { fe_id, isLocked } = item
+          return (
+            <div
+              key={fe_id}
+              onClick={(e) => handleClick(e, fe_id)}
+              className={classNames(
+                'm-[12px] rounded-[3px] border border-[#fff] p-[12px] hover:border-[#d9d9d9]',
+                selectedId == fe_id && '!border-[#1890ff]',
+              )}
+            >
+              <div
+                className={classNames(
+                  'pointer-events-none',
+                  isLocked ? 'opacity-50' : '',
+                )}
+              >
+                {genComponent(item)}
+              </div>
+            </div>
+          )
+        })}
     </div>
   )
 }

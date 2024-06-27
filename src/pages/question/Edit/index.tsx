@@ -3,9 +3,9 @@ import { useComponentInfoStore } from '@/store/useComponentInfoStore'
 import { Layout, Spin } from 'antd'
 import React, { FC } from 'react'
 import EditCanvas from './EditCanvas'
+import EditHeader from './EditHeader'
 import LeftPanel from './LeftPanel'
 import RightPanel from './RightPanel'
-import EditHeader from './EditHeader'
 
 const { Header, Sider, Content } = Layout
 
@@ -19,8 +19,8 @@ const Edit: FC = () => {
   return (
     <Spin spinning={loading}>
       <Header
-        style={{ background: '#fff' }}
-        className="flex items-center justify-between py-[12px] text-[32px]"
+        style={{ background: '#fff', padding: '10px 15px' }}
+        className="flex items-center justify-between"
       >
         <EditHeader />
       </Header>

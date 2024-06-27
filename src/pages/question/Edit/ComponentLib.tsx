@@ -20,6 +20,8 @@ const ComponentLib = () => {
         fe_id: nanoid(),
         title,
         type,
+        isHidden: false,
+        isLocked: false,
         props: defaultProps,
       })
     }
