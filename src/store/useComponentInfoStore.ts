@@ -125,18 +125,20 @@ export const useComponentInfoStore = create<ComponentStateType>((set) => ({
       addComponent(newCopiedComponent)
       return { selectedId: newCopiedComponent.fe_id }
     }),
-  selectPreComponent: () => set((state) => {
-    const { selectedId, componentList } = state
-    const newComponentList = componentList.filter(c => !c.isHidden)
-    const index = newComponentList.findIndex((c) => c.fe_id === selectedId)
-    if (index <= 0) return {}
-    return { selectedId: newComponentList[index - 1].fe_id }
-  }),
-  selectNextComponent: () => set((state) => {
-    const { selectedId, componentList } = state
-    const newComponentList = componentList.filter(c => !c.isHidden)
-    const index = newComponentList.findIndex((c) => c.fe_id === selectedId)
-    if (index < 0 || index === newComponentList.length - 1) return {}
-    return { selectedId: newComponentList[index + 1].fe_id }
-  })
+  selectPreComponent: () =>
+    set((state) => {
+      const { selectedId, componentList } = state
+      const newComponentList = componentList.filter((c) => !c.isHidden)
+      const index = newComponentList.findIndex((c) => c.fe_id === selectedId)
+      if (index <= 0) return {}
+      return { selectedId: newComponentList[index - 1].fe_id }
+    }),
+  selectNextComponent: () =>
+    set((state) => {
+      const { selectedId, componentList } = state
+      const newComponentList = componentList.filter((c) => !c.isHidden)
+      const index = newComponentList.findIndex((c) => c.fe_id === selectedId)
+      if (index < 0 || index === newComponentList.length - 1) return {}
+      return { selectedId: newComponentList[index + 1].fe_id }
+    }),
 }))

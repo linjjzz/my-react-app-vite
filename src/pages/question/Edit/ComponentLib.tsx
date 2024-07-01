@@ -29,7 +29,7 @@ const ComponentLib = () => {
     return (
       <div
         key={type}
-        className="mb-[12px] cursor-pointer rounded border border-white bg-white p-[12px] hover:border-[#d9d9d9]"
+        className="mb-[12px] cursor-pointer rounded border border-white bg-[#eee] p-[12px] hover:border-[#d9d9d9]"
         onClick={handleClick}
       >
         <div className=" pointer-events-none">

@@ -3,10 +3,10 @@ import {
   ComponentInfoType,
   useComponentInfoStore,
 } from '@/store/useComponentInfoStore'
+import { useKeyPress } from 'ahooks'
+import { message } from 'antd'
 import classNames from 'classnames'
 import React from 'react'
-import { useKeyPress } from 'ahooks';
-import { message } from 'antd';
 
 const genComponent = (componentInfo: ComponentInfoType) => {
   const { type, props } = componentInfo
@@ -22,34 +22,42 @@ const isActiveElementValid = () => {
 }
 
 const EditCanvas = () => {
-  const { componentList, selectedId, changeSelectedId, copyComponent, pasteComponent, removeComponent, selectPreComponent, selectNextComponent } =
-    useComponentInfoStore()
+  const {
+    componentList,
+    selectedId,
+    changeSelectedId,
+    copyComponent,
+    pasteComponent,
+    removeComponent,
+    selectPreComponent,
+    selectNextComponent,
+  } = useComponentInfoStore()
 
   useKeyPress(['ctrl.c'], () => {
     if (!isActiveElementValid()) return
     copyComponent()
     message.success('复制成功')
-  });
+  })
 
   useKeyPress(['ctrl.v'], () => {
     if (!isActiveElementValid()) return
     pasteComponent()
-  });
+  })
 
   useKeyPress(['backspace', 'delete'], () => {
     if (!isActiveElementValid()) return
     removeComponent()
-  });
+  })
 
   useKeyPress(['uparrow'], () => {
     if (!isActiveElementValid()) return
     selectPreComponent()
-  });
+  })
 
   useKeyPress(['downarrow'], () => {
     if (!isActiveElementValid()) return
     selectNextComponent()
-  });
+  })
 
   const handleClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
