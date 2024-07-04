@@ -1,11 +1,14 @@
-import { DownOutlined, EditOutlined, LeftOutlined } from '@ant-design/icons'
-import { Button, Space } from 'antd'
-import React from 'react'
+import { DownOutlined, LeftOutlined } from '@ant-design/icons'
+import { Button, Space, Typography } from 'antd'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import EditToolbar from './EditToolbar'
 
+const { Paragraph, Title } = Typography
+
 function EditHeader() {
   const navigator = useNavigate()
+  const [editTitle, setEditTitler] = useState('Title')
   return (
     <>
       <div className="flex items-center">
@@ -16,8 +19,13 @@ function EditHeader() {
         >
           返回
         </Button>
-        <span className="mr-[15px] font-bold">Title</span>
-        <EditOutlined />
+        <Title
+          style={{ marginBottom: 0 }}
+          editable={{ onChange: setEditTitler }}
+          level={5}
+        >
+          {editTitle}
+        </Title>
       </div>
       <div>
         <EditToolbar />

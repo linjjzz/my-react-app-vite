@@ -17,7 +17,7 @@ const PropsComponent = (props: QuestionCheckboxPropsType) => {
   const handleValuesChange = (_: any, allvalues: QuestionCheckboxPropsType) => {
     let newList: listType[]
     if (allvalues.list) {
-      newList = allvalues.list.filter(item => !(item.text == null))
+      newList = allvalues.list.filter((item) => !(item.text == null))
       editComponent({ ...allvalues, options: newList })
     }
     const { list = [] } = allvalues
@@ -55,7 +55,7 @@ const PropsComponent = (props: QuestionCheckboxPropsType) => {
                     {
                       <Form.Item
                         name={[name, 'checked']}
-                        valuePropName='checked'
+                        valuePropName="checked"
                       >
                         <Checkbox />
                       </Form.Item>

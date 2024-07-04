@@ -21,14 +21,14 @@ const QuestionTitle: FC<QuestionTextAreaPropsType> = (props) => {
     <div>
       <Paragraph strong>{title}</Paragraph>
       <div>
-        <TextArea rows={4} placeholder={placeholder} />
+        <TextArea rows={3} placeholder={placeholder} />
       </div>
     </div>
   )
 }
 
 export default {
-  title: '输入框',
+  title: '多行输入框',
   type: 'questionTextArea',
   Component: QuestionTitle,
   PropsComponent,

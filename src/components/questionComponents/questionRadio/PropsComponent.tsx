@@ -17,7 +17,7 @@ const PropsComponent = (props: QuestionRadioPropsType) => {
   const handleValuesChange = (_: any, allvalues: QuestionRadioPropsType) => {
     let newOpt: optionType[]
     if (allvalues.options) {
-      newOpt = allvalues.options.filter(opt => !(opt.text == null))
+      newOpt = allvalues.options.filter((opt) => !(opt.text == null))
       editComponent({ ...allvalues, options: newOpt })
     }
     const { options = [] } = allvalues

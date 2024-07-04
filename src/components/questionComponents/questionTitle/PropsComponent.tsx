@@ -4,13 +4,13 @@ import React, { useEffect } from 'react'
 import { type QuestionTitlePropsType } from './index'
 
 const PropsComponent = (props: QuestionTitlePropsType) => {
-  const { text, level, isCenter } = props
+  const { title, level, isCenter } = props
   const [form] = Form.useForm()
   const { editComponent } = useComponentInfoStore()
 
   useEffect(() => {
-    form.setFieldsValue({ text, level, isCenter })
-  }, [text, level, isCenter])
+    form.setFieldsValue({ title, level, isCenter })
+  }, [title, level, isCenter])
 
   const onChange = (changedValues: QuestionTitlePropsType) => {
     editComponent(changedValues)
@@ -20,12 +20,12 @@ const PropsComponent = (props: QuestionTitlePropsType) => {
     <Form
       form={form}
       layout="vertical"
-      initialValues={{ text, level, isCenter }}
+      initialValues={{ title, level, isCenter }}
       onValuesChange={onChange}
     >
       <Form.Item
         label="标题内容"
-        name="text"
+        name="title"
         rules={[{ required: true, message: '请输入标题内容' }]}
       >
         <Input />

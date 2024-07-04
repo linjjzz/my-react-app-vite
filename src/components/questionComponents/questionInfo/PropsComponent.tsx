@@ -39,7 +39,7 @@ const PropsComponent = (props: QuestionInfoPropsType) => {
         name="text"
         rules={[{ required: true, message: '请输入段落内容' }]}
       >
-        <TextArea rows={4} />
+        <TextArea rows={3} />
       </Form.Item>
     </Form>
   )

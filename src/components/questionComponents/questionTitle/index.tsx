@@ -5,13 +5,13 @@ import PropsComponent from './PropsComponent'
 const { Title } = Typography
 
 export type QuestionTitlePropsType = {
-  text?: string
+  title?: string
   level?: 1 | 2 | 3
   isCenter?: boolean
 }
 
 export const defaultQuestionTitleProps: QuestionTitlePropsType = {
-  text: '一行标题',
+  title: '一行标题',
   level: 1,
   isCenter: false,
 }
@@ -31,7 +31,7 @@ const genFontSize = (level: number) => {
 
 const QuestionTitle: FC<QuestionTitlePropsType> = (props) => {
   const {
-    text = '',
+    title = '',
     level = 1,
     isCenter = false,
   } = { ...defaultQuestionTitleProps, ...props }
@@ -45,7 +45,7 @@ const QuestionTitle: FC<QuestionTitlePropsType> = (props) => {
           fontSize: genFontSize(level),
         }}
       >
-        {text}
+        {title}
       </Title>
     </div>
   )

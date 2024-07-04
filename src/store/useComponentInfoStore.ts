@@ -21,12 +21,13 @@ export type ComponentStateType = {
   addComponent: (newComponent: ComponentInfoType) => void
   editComponent: (newComponent: ComponentPropsType) => void
   removeComponent: () => void
-  chnageComponentHidden: () => void
+  chnageComponentHidden: (isNext?: boolean) => void
   chnageComponentLocked: () => void
   copyComponent: () => void
   pasteComponent: () => void
   selectPreComponent: () => void
   selectNextComponent: () => void
+  editComponentTitle: (title: string) => void
 }
 
 export const useComponentInfoStore = create<ComponentStateType>((set) => ({
@@ -82,7 +83,7 @@ export const useComponentInfoStore = create<ComponentStateType>((set) => ({
       const newSelectedId = getNextSelectedId(selectedId, componentList)
       return { componentList: newComponentList, selectedId: newSelectedId }
     }),
-  chnageComponentHidden: () =>
+  chnageComponentHidden: (isNext = true) =>
     set((state) => {
       const { componentList, selectedId } = state
       const newComponentList = componentList.map((c) => {
@@ -92,7 +93,7 @@ export const useComponentInfoStore = create<ComponentStateType>((set) => ({
           isHidden: !c.isHidden,
         }
       })
-      const newSelectedId = getNextSelectedId(selectedId, componentList)
+      const newSelectedId = isNext ? getNextSelectedId(selectedId, componentList) : selectedId
       return { componentList: newComponentList, selectedId: newSelectedId }
     }),
   chnageComponentLocked: () =>
@@ -140,5 +141,17 @@ export const useComponentInfoStore = create<ComponentStateType>((set) => ({
       const index = newComponentList.findIndex((c) => c.fe_id === selectedId)
       if (index < 0 || index === newComponentList.length - 1) return {}
       return { selectedId: newComponentList[index + 1].fe_id }
+    }),
+  editComponentTitle: (title: string) =>
+    set((state) => {
+      const { componentList, selectedId } = state
+      let newComponentList = componentList.map((c) => {
+        if (c.fe_id !== selectedId) return c
+        return {
+          ...c,
+          title: title,
+        }
+      })
+      return { componentList: newComponentList }
     }),
 }))
