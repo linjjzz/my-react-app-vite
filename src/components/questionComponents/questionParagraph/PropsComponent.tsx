@@ -15,8 +15,6 @@ const PropsComponent = (props: QuestionParagraphPropsType) => {
   }, [text, isCenter])
 
   const onChange = (changedValues: QuestionParagraphPropsType) => {
-    console.log(changedValues)
-
     editComponent(changedValues)
   }
 

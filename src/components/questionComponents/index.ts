@@ -1,21 +1,25 @@
 import { FC } from 'react'
+import QuestionCheckboxConf, {
+  QuestionCheckboxPropsType,
+} from './questionCheckbox'
 import QuestionInfoConf, { QuestionInfoPropsType } from './questionInfo'
 import QuestionInputConf, { QuestionInputPropsType } from './questionInput'
 import QuestionParagraphConf, {
   QuestionParagraphPropsType,
 } from './questionParagraph'
+import QuestionRadioConf, { QuestionRadioPropsType } from './questionRadio'
 import QuestionTextAreaConf, {
   QuestionTextAreaPropsType,
 } from './questionTextArea'
 import QuestionTitleConf, { QuestionTitlePropsType } from './questionTitle'
-import QuestionRadioConf, { QuestionRadioPropsType } from './questionRadio'
 
 export type ComponentPropsType = QuestionInputPropsType &
   QuestionTitlePropsType &
   QuestionParagraphPropsType &
   QuestionInfoPropsType &
   QuestionTextAreaPropsType &
-  QuestionRadioPropsType
+  QuestionRadioPropsType &
+  QuestionCheckboxPropsType
 
 export type ComponentConfType = {
   title: string
@@ -32,7 +36,8 @@ export const componentConfList: ComponentConfType[] = [
   QuestionParagraphConf,
   QuestionInputConf,
   QuestionTextAreaConf,
-  QuestionRadioConf
+  QuestionRadioConf,
+  QuestionCheckboxConf,
 ]
 
 // 组件分组
@@ -47,7 +52,7 @@ export const componentConfGroup = [
   },
   {
     groupName: '用户选择',
-    components: [QuestionRadioConf],
+    components: [QuestionRadioConf, QuestionCheckboxConf],
   },
 ]
 

@@ -3,30 +3,31 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Form, Input, Select, Space } from 'antd'
 import { nanoid } from 'nanoid'
 import React, { useEffect } from 'react'
-import type { QuestionRadioPropsType, optionType } from './index'
+import type { QuestionCheckboxPropsType, listType } from './index'
 
-const PropsComponent = (props: QuestionRadioPropsType) => {
-  const { title, options = [], value = 0, isVertical } = props
+const PropsComponent = (props: QuestionCheckboxPropsType) => {
+  const { title, list = [], isVertical } = props
   const [form] = Form.useForm()
   const { editComponent } = useComponentInfoStore()
 
   useEffect(() => {
-    form.setFieldsValue({ title, options, value, isVertical })
-  }, [title, value, options, isVertical])
+    form.setFieldsValue({ title, list, isVertical })
+  }, [title, list, isVertical])
 
-  const handleValuesChange = (_: any, allvalues: QuestionRadioPropsType) => {
-    let newOpt: optionType[]
-    if (allvalues.options) {
-      newOpt = allvalues.options.filter(opt => !(opt.text == null))
-      editComponent({ ...allvalues, options: newOpt })
+  const handleValuesChange = (_: any, allvalues: QuestionCheckboxPropsType) => {
+    let newList: listType[]
+    if (allvalues.list) {
+      newList = allvalues.list.filter(item => !(item.text == null))
+      editComponent({ ...allvalues, options: newList })
     }
-    const { options = [] } = allvalues
-    newOpt = options.map((opt) => {
-      if (opt.value) return opt
-      return { ...opt, value: nanoid() }
+    const { list = [] } = allvalues
+    newList = list.map((item) => {
+      if (item.value) return item
+      return { ...item, value: nanoid() }
     })
-    let newComponent: QuestionRadioPropsType
-    newComponent = { ...allvalues, options: newOpt }
+
+    let newComponent: QuestionCheckboxPropsType
+    newComponent = { ...allvalues, list: newList }
     editComponent(newComponent)
   }
 
@@ -34,7 +35,7 @@ const PropsComponent = (props: QuestionRadioPropsType) => {
     <Form
       form={form}
       layout="vertical"
-      initialValues={{ title, options, value, isVertical }}
+      initialValues={{ title, list, isVertical }}
       onValuesChange={handleValuesChange}
     >
       <Form.Item
@@ -45,21 +46,29 @@ const PropsComponent = (props: QuestionRadioPropsType) => {
         <Input />
       </Form.Item>
       <Form.Item label="选项">
-        <Form.List name="options">
+        <Form.List name="list">
           {(fields, { add, remove }) => (
             <>
               {fields.map(({ key, name }, index) => {
                 return (
                   <Space key={key} align="baseline">
+                    {
+                      <Form.Item
+                        name={[name, 'checked']}
+                        valuePropName='checked'
+                      >
+                        <Checkbox />
+                      </Form.Item>
+                    }
                     <Form.Item
                       name={[name, 'text']}
                       rules={[
                         { required: true, message: '请输入选项文字' },
                         {
                           validator(_, text) {
-                            const { options = [] } = form.getFieldsValue()
+                            const { list = [] } = form.getFieldsValue()
                             let num = 0
-                            options.forEach((opt: optionType) => {
+                            list.forEach((opt: listType) => {
                               if (opt.text === text) num++
                             })
                             if (num === 1) return Promise.resolve()
@@ -70,7 +79,7 @@ const PropsComponent = (props: QuestionRadioPropsType) => {
                     >
                       <Input placeholder="请输入选项文字" />
                     </Form.Item>
-                    {index > 1 && (
+                    {index > 0 && (
                       <MinusCircleOutlined onClick={() => remove(name)} />
                     )}
                   </Space>
@@ -80,7 +89,7 @@ const PropsComponent = (props: QuestionRadioPropsType) => {
                 <Button
                   block
                   type="link"
-                  onClick={() => add({ text: '', value: '' })}
+                  onClick={() => add({ label: '', value: '', checked: false })}
                   icon={<PlusOutlined />}
                 >
                   添加选项
@@ -89,15 +98,6 @@ const PropsComponent = (props: QuestionRadioPropsType) => {
             </>
           )}
         </Form.List>
-      </Form.Item>
-      <Form.Item label="默认选中" name="value">
-        <Select
-          value={value}
-          options={options?.map(({ value, text }) => ({
-            value,
-            label: text || '',
-          }))}
-        />
       </Form.Item>
       <Form.Item name="isVertical" valuePropName="checked">
         <Checkbox>竖向排列</Checkbox>

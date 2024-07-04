@@ -11,7 +11,7 @@ export type QuestionTextAreaPropsType = {
 }
 
 export const defaultQuestionTextAreaProps: QuestionTextAreaPropsType = {
-  title: '输入框标题',
+  title: '多行输入框标题',
   placeholder: '请输入',
 }
 
