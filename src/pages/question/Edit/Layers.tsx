@@ -51,8 +51,8 @@ const Layers = () => {
                     type={isHidden ? 'primary' : 'default'}
                     icon={isHidden ? <EyeOutlined /> : <EyeInvisibleOutlined />}
                     onClick={(e) => {
-                      e.stopPropagation(); // 阻止事件冒泡
-                      chnageComponentHidden(false);
+                      e.stopPropagation() // 阻止事件冒泡
+                      chnageComponentHidden(false)
                     }}
                   />
                 </Tooltip>
@@ -63,8 +63,8 @@ const Layers = () => {
                     type={isLocked ? 'primary' : 'default'}
                     icon={isLocked ? <LockOutlined /> : <UnlockOutlined />}
                     onClick={(e) => {
-                      e.stopPropagation(); // 阻止事件冒泡
-                      chnageComponentLocked();
+                      e.stopPropagation() // 阻止事件冒泡
+                      chnageComponentLocked()
                     }}
                   />
                 </Tooltip>

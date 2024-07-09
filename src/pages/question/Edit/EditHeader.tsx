@@ -1,14 +1,20 @@
+import { usePageInfoStore } from '@/store/usePageInfoStore'
 import { DownOutlined, LeftOutlined } from '@ant-design/icons'
 import { Button, Space, Typography } from 'antd'
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import EditToolbar from './EditToolbar'
 
-const { Paragraph, Title } = Typography
+const { Title } = Typography
 
 function EditHeader() {
   const navigator = useNavigate()
-  const [editTitle, setEditTitler] = useState('Title')
+  const { pageInfo, resetPageInfo } = usePageInfoStore()
+
+  const editTitle = (title: string) => {
+    resetPageInfo({ ...pageInfo, title })
+  }
+
   return (
     <>
       <div className="flex items-center">
@@ -21,10 +27,10 @@ function EditHeader() {
         </Button>
         <Title
           style={{ marginBottom: 0 }}
-          editable={{ onChange: setEditTitler }}
+          editable={{ onChange: editTitle }}
           level={5}
         >
-          {editTitle}
+          {pageInfo?.title}
         </Title>
       </div>
       <div>

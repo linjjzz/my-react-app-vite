@@ -93,7 +93,9 @@ export const useComponentInfoStore = create<ComponentStateType>((set) => ({
           isHidden: !c.isHidden,
         }
       })
-      const newSelectedId = isNext ? getNextSelectedId(selectedId, componentList) : selectedId
+      const newSelectedId = isNext
+        ? getNextSelectedId(selectedId, componentList)
+        : selectedId
       return { componentList: newComponentList, selectedId: newSelectedId }
     }),
   chnageComponentLocked: () =>
