@@ -1,7 +1,7 @@
 import QuestionCard from '@/components/QuestionCard'
 import { useRequest, useTitle } from 'ahooks'
 import { Divider, List, Skeleton, Typography } from 'antd'
-import React, { FC, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 import ListSearch from '@/components/LIstSearch'

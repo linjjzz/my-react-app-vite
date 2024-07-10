@@ -17,32 +17,43 @@ function EditHeader() {
   const { id = '' } = useParams()
 
   const { loading: saveLoading, run: saveQuestion } = useRequest(
-    async () => {
+    async (_auto = false) => {
       if (!id) return
       await editQuestionService(id, { ...pageInfo, componentList })
     },
-    { manual: true },
+    {
+      manual: true,
+      onSuccess: (_data, [_auto]) => {
+        if (_auto === true) return
+        message.success('保存成功')
+      }
+    },
   )
 
   const { loading: publishLoading, run: publishQuestion } = useRequest(
     async () => {
       if (!id) return
-      // await editQuestionService(id, { ...pageInfo, componentList })
+      await editQuestionService(id, { ...pageInfo, componentList, isPublished: true })
     },
-    { manual: true },
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success('发布成功')
+        navigator(`/question/stat/${id}`)
+      }
+    },
   )
 
   useKeyPress(['ctrl.s', 'meta.s'], (e: KeyboardEvent) => {
     e.preventDefault()
     if (saveLoading) return
     saveQuestion()
-    message.success('保存成功')
   })
 
   // 自动保存
   useDebounceEffect(
     () => {
-      saveQuestion()
+      saveQuestion(true)
     },
     [pageInfo, componentList],
     { wait: 3000 },
@@ -83,7 +94,7 @@ function EditHeader() {
             保存
           </Button>
           <Button
-            loading={saveLoading}
+            loading={publishLoading}
             type="primary"
             onClick={publishQuestion}
           >
