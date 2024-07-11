@@ -2,6 +2,7 @@ import { type ComponentPropsType } from '@/components/questionComponents'
 import { nanoid } from 'nanoid'
 import { create } from 'zustand'
 import { getNextSelectedId } from './utils'
+import { arrayMove } from '@dnd-kit/sortable'
 
 export type ComponentInfoType = {
   fe_id: string
@@ -28,6 +29,7 @@ export type ComponentStateType = {
   selectPreComponent: () => void
   selectNextComponent: () => void
   editComponentTitle: (title: string) => void
+  moveComponentPosition: (oldIndex: number, newIndex: number) => void
 }
 
 export const useComponentInfoStore = create<ComponentStateType>((set) => ({
@@ -156,4 +158,8 @@ export const useComponentInfoStore = create<ComponentStateType>((set) => ({
       })
       return { componentList: newComponentList }
     }),
+  moveComponentPosition: (oldIndex: number, newIndex: number) =>
+    set((state) => {
+      return { componentList: arrayMove(state.componentList, oldIndex, newIndex) }
+    })
 }))

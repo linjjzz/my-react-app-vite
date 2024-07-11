@@ -1,3 +1,5 @@
+import SortableContainer from '@/components/dragSortable/SortableContainer'
+import SortableItem from '@/components/dragSortable/SortableItem'
 import { getComponentConfByType } from '@/components/questionComponents'
 import {
   ComponentInfoType,
@@ -31,7 +33,14 @@ const EditCanvas = () => {
     removeComponent,
     selectPreComponent,
     selectNextComponent,
+    moveComponentPosition
   } = useComponentInfoStore()
+
+  const componentListWithId = componentList.map((c) => ({ ...c, id: c.fe_id }))
+
+  const onDragEnd = (oldIndex: number, newIndex: number) => {
+    moveComponentPosition(oldIndex, newIndex)
+  }
 
   useKeyPress(['ctrl.c'], () => {
     if (!isActiveElementValid()) return
@@ -68,32 +77,36 @@ const EditCanvas = () => {
   }
 
   return (
-    <div className="min-h-[100%] overflow-hidden bg-white">
-      {componentList
-        .filter((c) => !c.isHidden)
-        .map((item) => {
-          const { fe_id, isLocked } = item
-          return (
-            <div
-              key={fe_id}
-              onClick={(e) => handleClick(e, fe_id)}
-              className={classNames(
-                'm-[12px] rounded-[3px] border border-[#fff] p-[12px] hover:border-[#d9d9d9]',
-                selectedId == fe_id && '!border-[#1890ff]',
-              )}
-            >
-              <div
-                className={classNames(
-                  'pointer-events-none',
-                  isLocked ? 'opacity-50' : '',
-                )}
-              >
-                {genComponent(item)}
-              </div>
-            </div>
-          )
-        })}
-    </div>
+    <SortableContainer items={componentListWithId} onDragEnd={onDragEnd}>
+      <div className="min-h-[100%] overflow-hidden bg-white">
+        {componentListWithId
+          .filter((c) => !c.isHidden)
+          .map((item) => {
+            const { fe_id, isLocked } = item
+            return (
+              <SortableItem key={fe_id} id={fe_id}>
+                <div
+                  key={fe_id}
+                  onClick={(e) => handleClick(e, fe_id)}
+                  className={classNames(
+                    'm-[12px] rounded-[3px] border border-[#fff] p-[12px] hover:border-[#d9d9d9]',
+                    selectedId == fe_id && '!border-[#1890ff]',
+                  )}
+                >
+                  <div
+                    className={classNames(
+                      'pointer-events-none',
+                      isLocked ? 'opacity-50' : '',
+                    )}
+                  >
+                    {genComponent(item)}
+                  </div>
+                </div>
+              </SortableItem>
+            )
+          })}
+      </div>
+    </SortableContainer>
   )
 }
 

@@ -26,21 +26,25 @@ function EditHeader() {
       onSuccess: (_data, [_auto]) => {
         if (_auto === true) return
         message.success('保存成功')
-      }
+      },
     },
   )
 
   const { loading: publishLoading, run: publishQuestion } = useRequest(
     async () => {
       if (!id) return
-      await editQuestionService(id, { ...pageInfo, componentList, isPublished: true })
+      await editQuestionService(id, {
+        ...pageInfo,
+        componentList,
+        isPublished: true,
+      })
     },
     {
       manual: true,
       onSuccess: () => {
         message.success('发布成功')
         navigator(`/question/stat/${id}`)
-      }
+      },
     },
   )
 
