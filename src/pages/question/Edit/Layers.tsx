@@ -1,4 +1,9 @@
-import { ComponentInfoType, useComponentInfoStore } from '@/store/useComponentInfoStore'
+import SortableContainer from '@/components/dragSortable/SortableContainer'
+import SortableItem from '@/components/dragSortable/SortableItem'
+import {
+  ComponentInfoType,
+  useComponentInfoStore,
+} from '@/store/useComponentInfoStore'
 import {
   EyeInvisibleOutlined,
   EyeOutlined,
@@ -8,8 +13,6 @@ import {
 import { Button, Input, List, Space, Tooltip } from 'antd'
 import classNames from 'classnames'
 import React, { useEffect, useState } from 'react'
-import SortableContainer from '@/components/dragSortable/SortableContainer'
-import SortableItem from '@/components/dragSortable/SortableItem'
 
 const Layers = () => {
   const {
@@ -19,7 +22,7 @@ const Layers = () => {
     editComponentTitle,
     chnageComponentHidden,
     chnageComponentLocked,
-    moveComponentPosition
+    moveComponentPosition,
   } = useComponentInfoStore()
 
   const componentListWithId = componentList.map((c) => ({ ...c, id: c.fe_id }))
@@ -30,9 +33,7 @@ const Layers = () => {
 
   return (
     <SortableContainer items={componentListWithId} onDragEnd={onDragEnd}>
-      <List
-        itemLayout="horizontal"
-      >
+      <List itemLayout="horizontal">
         {componentListWithId.map((item) => {
           const { fe_id, title, isHidden, isLocked } = item
           return (
@@ -54,19 +55,27 @@ const Layers = () => {
                     onChange={(e) => editComponentTitle(e.target.value)}
                   />
                   <Space>
-                    <Tooltip title={isHidden ? '显示' : '隐藏'} placement="bottom">
+                    <Tooltip
+                      title={isHidden ? '显示' : '隐藏'}
+                      placement="bottom"
+                    >
                       <Button
                         size="small"
                         shape="circle"
                         type={isHidden ? 'primary' : 'default'}
-                        icon={isHidden ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                        icon={
+                          isHidden ? <EyeOutlined /> : <EyeInvisibleOutlined />
+                        }
                         onClick={(e) => {
                           e.stopPropagation() // 阻止事件冒泡
                           chnageComponentHidden(false)
                         }}
                       />
                     </Tooltip>
-                    <Tooltip title={isLocked ? '解锁' : '锁定'} placement="bottom">
+                    <Tooltip
+                      title={isLocked ? '解锁' : '锁定'}
+                      placement="bottom"
+                    >
                       <Button
                         size="small"
                         shape="circle"
@@ -84,7 +93,7 @@ const Layers = () => {
             </SortableItem>
           )
         })}
-      </List >
+      </List>
     </SortableContainer>
   )
 }

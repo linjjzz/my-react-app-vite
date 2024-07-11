@@ -3,9 +3,11 @@ import {
   BlockOutlined,
   CopyOutlined,
   DeleteOutlined,
+  DownOutlined,
   EyeInvisibleOutlined,
   LockOutlined,
   UnlockOutlined,
+  UpOutlined,
 } from '@ant-design/icons'
 import { Button, Space, Tooltip, message } from 'antd'
 import React, { useEffect, useState } from 'react'
@@ -20,11 +22,17 @@ function EditToolbar() {
     copyComponent,
     copiedComponent,
     pasteComponent,
+    moveComponentPosition,
   } = useComponentInfoStore()
 
   const [isLocked, setIsLocked] = useState(
     componentList.find((c) => c.fe_id === selectedId)?.isLocked,
   )
+
+  const length = componentList.length
+  const selectIndex = componentList.findIndex((c) => c.fe_id === selectedId)
+  const isFirst = selectIndex <= 0
+  const isLast = selectIndex + 1 >= length
 
   useEffect(() => {
     const isLocked = componentList.find((c) => c.fe_id === selectedId)?.isLocked
@@ -50,6 +58,16 @@ function EditToolbar() {
 
   const handlePaste = () => {
     pasteComponent()
+  }
+
+  const handleMoveUp = () => {
+    if (isFirst) return
+    moveComponentPosition(selectIndex, selectIndex - 1)
+  }
+
+  const handleMoveDown = () => {
+    if (isLast) return
+    moveComponentPosition(selectIndex, selectIndex + 1)
   }
 
   return (
@@ -91,6 +109,22 @@ function EditToolbar() {
               icon={<BlockOutlined />}
               onClick={handlePaste}
               disabled={!copiedComponent}
+            />
+          </Tooltip>
+          <Tooltip title="上移" placement="bottom">
+            <Button
+              shape="circle"
+              icon={<UpOutlined />}
+              disabled={isFirst}
+              onClick={handleMoveUp}
+            />
+          </Tooltip>
+          <Tooltip title="下移" placement="bottom">
+            <Button
+              shape="circle"
+              icon={<DownOutlined />}
+              disabled={isLast}
+              onClick={handleMoveDown}
             />
           </Tooltip>
         </Space>

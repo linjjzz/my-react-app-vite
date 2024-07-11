@@ -14,3 +14,8 @@
 .question-content-mh {
   height: calc(100vh - 64px);
 }
+
+/*dnd kit*/
+div[role="button"] {
+  outline: 0;
+}

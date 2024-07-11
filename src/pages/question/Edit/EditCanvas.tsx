@@ -19,7 +19,8 @@ const genComponent = (componentInfo: ComponentInfoType) => {
 }
 
 const isActiveElementValid = () => {
-  if (document.activeElement === document.body) return true
+  // if (document.activeElement === document.body) return true // 加拖拽前
+  if (document.activeElement?.matches('div[role="button"]')) return true // 加拖拽后
   return false
 }
 
@@ -33,7 +34,7 @@ const EditCanvas = () => {
     removeComponent,
     selectPreComponent,
     selectNextComponent,
-    moveComponentPosition
+    moveComponentPosition,
   } = useComponentInfoStore()
 
   const componentListWithId = componentList.map((c) => ({ ...c, id: c.fe_id }))

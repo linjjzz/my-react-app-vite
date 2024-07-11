@@ -16,6 +16,7 @@ function EditHeader() {
   const { componentList } = useComponentInfoStore()
   const { id = '' } = useParams()
 
+  // 保存
   const { loading: saveLoading, run: saveQuestion } = useRequest(
     async (_auto = false) => {
       if (!id) return
@@ -30,6 +31,7 @@ function EditHeader() {
     },
   )
 
+  // 发布
   const { loading: publishLoading, run: publishQuestion } = useRequest(
     async () => {
       if (!id) return
