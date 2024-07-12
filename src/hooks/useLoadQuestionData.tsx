@@ -10,6 +10,8 @@ function useLoadQuestionData() {
 
   const { resetComponentInfo } = useComponentInfoStore()
   const { resetPageInfo } = usePageInfoStore()
+  const { clear } = useComponentInfoStore.temporal.getState()
+
 
   const { loading, data, error, run } = useRequest(
     async (id: string) => {
@@ -35,6 +37,8 @@ function useLoadQuestionData() {
     }
     resetComponentInfo(componentList)
     resetPageInfo({ title, desc, js, css })
+    // 撤销重做从初始化后开始
+    clear()
   }, [data])
 
   return { loading, error }

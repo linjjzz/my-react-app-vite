@@ -18,6 +18,7 @@ const genComponent = (componentInfo: ComponentInfoType) => {
   return <Component {...props} />
 }
 
+// 判断是否选中组件
 const isActiveElementValid = () => {
   // if (document.activeElement === document.body) return true // 加拖拽前
   if (document.activeElement?.matches('div[role="button"]')) return true // 加拖拽后

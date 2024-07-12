@@ -56,6 +56,9 @@ importers:
       styled-components:
         specifier: ^6.1.11
         version: 6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      zundo:
+        specifier: ^2.1.0
+        version: 2.1.0(zustand@4.5.2(@types/react@18.3.2)(immer@10.1.1)(react@18.3.1))
       zustand:
         specifier: ^4.5.2
         version: 4.5.2(@types/react@18.3.2)(immer@10.1.1)(react@18.3.1)
@@ -2084,6 +2087,11 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
+  zundo@2.1.0:
+    resolution: {integrity: sha512-IMhYXDZWbyGu/p3rQb1d3orhCfAyi9hGkx6N579ZtO7mWrzvBdNyGEcxciv1jtIYPKBqLSAgzKqjLguau09f9g==}
+    peerDependencies:
+      zustand: ^4.3.0
+
   zustand@4.5.2:
     resolution: {integrity: sha512-2cN1tPkDVkwCy5ickKrI7vijSjPksFRfqS6237NzT0vqSsztTNnQdHw9mmN7uBdk3gceVXU0a+21jFzFzAc9+g==}
     engines: {node: '>=12.7.0'}
@@ -4101,6 +4109,10 @@ snapshots:
   yaml@2.4.2: {}
 
   yocto-queue@0.1.0: {}
+
+  zundo@2.1.0(zustand@4.5.2(@types/react@18.3.2)(immer@10.1.1)(react@18.3.1)):
+    dependencies:
+      zustand: 4.5.2(@types/react@18.3.2)(immer@10.1.1)(react@18.3.1)
 
   zustand@4.5.2(@types/react@18.3.2)(immer@10.1.1)(react@18.3.1):
     dependencies:
