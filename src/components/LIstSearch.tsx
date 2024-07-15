@@ -8,7 +8,7 @@ const { Search } = Input
 const ListSearch: FC = () => {
   const [value, setValue] = useState<string>()
 
-  const nav = useNavigate()
+  const navigator = useNavigate()
   const { pathname } = useLocation()
   const [searchParams] = useSearchParams()
 
@@ -22,7 +22,7 @@ const ListSearch: FC = () => {
   }
 
   const onSearch = (value: string) => {
-    nav({
+    navigator({
       pathname,
       search: value === '' ? '' : `${SEARCH_KEYWORD}=${value}`,
     })

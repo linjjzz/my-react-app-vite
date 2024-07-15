@@ -23,13 +23,13 @@ const LIstPage: FC<propsType> = (props) => {
     setPageSize(pageSize)
   }, [searchParams])
 
-  const nav = useNavigate()
+  const navigator = useNavigate()
   const { pathname } = useLocation()
 
   const onchange = (page: number, pageSize: number) => {
     searchParams.set(SEARCH_PAGE, page.toString())
     searchParams.set(SEARCH_PAGE_SIZE, pageSize.toString())
-    nav({
+    navigator({
       pathname,
       search: searchParams.toString(),
     })

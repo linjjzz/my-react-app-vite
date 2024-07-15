@@ -12,7 +12,6 @@ function useLoadQuestionData() {
   const { resetPageInfo } = usePageInfoStore()
   const { clear } = useComponentInfoStore.temporal.getState()
 
-
   const { loading, data, error, run } = useRequest(
     async (id: string) => {
       if (!id) throw new Error('没有问卷 id')
@@ -28,15 +27,16 @@ function useLoadQuestionData() {
 
   useEffect(() => {
     if (!id) return
-    const { title, desc, js, css, componentList } = data ?? {
+    const { title, desc, js, css, isPublished, componentList } = data ?? {
       title: '',
       desc: '',
       js: '',
       css: '',
+      isPublished: false,
       componentList: [],
     }
     resetComponentInfo(componentList)
-    resetPageInfo({ title, desc, js, css })
+    resetPageInfo({ title, desc, js, css, isPublished })
     // 撤销重做从初始化后开始
     clear()
   }, [data])

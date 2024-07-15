@@ -1,9 +1,9 @@
 import { type ComponentPropsType } from '@/components/questionComponents'
 import { arrayMove } from '@dnd-kit/sortable'
 import { nanoid } from 'nanoid'
+import { temporal } from 'zundo'
 import { create } from 'zustand'
 import { getNextSelectedId } from './utils'
-import { temporal } from 'zundo';
 
 export type ComponentInfoType = {
   fe_id: string
@@ -35,7 +35,7 @@ export type ComponentStateType = {
 
 export const useComponentInfoStore = create<ComponentStateType>()(
   temporal(
-    ((set) => ({
+    (set) => ({
       componentList: [],
       selectedId: '',
       copiedComponent: null,
@@ -61,7 +61,10 @@ export const useComponentInfoStore = create<ComponentStateType>()(
             ]
           }
 
-          return { componentList: newComponentList, selectedId: newComponent.fe_id }
+          return {
+            componentList: newComponentList,
+            selectedId: newComponent.fe_id,
+          }
         }),
       editComponent: (newProps: ComponentPropsType) =>
         set((state) => {
@@ -137,7 +140,9 @@ export const useComponentInfoStore = create<ComponentStateType>()(
         set((state) => {
           const { selectedId, componentList } = state
           const newComponentList = componentList.filter((c) => !c.isHidden)
-          const index = newComponentList.findIndex((c) => c.fe_id === selectedId)
+          const index = newComponentList.findIndex(
+            (c) => c.fe_id === selectedId,
+          )
           if (index <= 0) return {}
           return { selectedId: newComponentList[index - 1].fe_id }
         }),
@@ -145,7 +150,9 @@ export const useComponentInfoStore = create<ComponentStateType>()(
         set((state) => {
           const { selectedId, componentList } = state
           const newComponentList = componentList.filter((c) => !c.isHidden)
-          const index = newComponentList.findIndex((c) => c.fe_id === selectedId)
+          const index = newComponentList.findIndex(
+            (c) => c.fe_id === selectedId,
+          )
           if (index < 0 || index === newComponentList.length - 1) return {}
           return { selectedId: newComponentList[index + 1].fe_id }
         }),
@@ -167,14 +174,13 @@ export const useComponentInfoStore = create<ComponentStateType>()(
             componentList: arrayMove(state.componentList, oldIndex, newIndex),
           }
         }),
-    })),
+    }),
     {
       partialize: (state) => {
-        const { resetComponentInfo, ...rest } = state;
-        return rest;
+        const { resetComponentInfo, ...rest } = state
+        return rest
       },
-      limit: 20
+      limit: 20,
     },
-  )
+  ),
 )
-

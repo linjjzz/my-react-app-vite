@@ -70,10 +70,7 @@ const EditCanvas = () => {
     selectNextComponent()
   })
 
-  const handleClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    id: string,
-  ) => {
+  const handleClick = (e: React.MouseEvent, id: string) => {
     e.stopPropagation()
     changeSelectedId(id)
   }

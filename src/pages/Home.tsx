@@ -1,3 +1,4 @@
+import { MANAGE_LIST } from '@/router'
 import { Button, Typography } from 'antd'
 import React, { FC, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -5,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 const { Title, Paragraph } = Typography
 
 const Home: FC = () => {
-  const nav = useNavigate()
+  const navigator = useNavigate()
   return (
     // background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
     <div className="flex h-full flex-col items-center justify-center bg-gradient-to-r from-[#4facfe] to-[#00f2fe]">
@@ -17,7 +18,7 @@ const Home: FC = () => {
         <Button
           className="h-[50px] text-[24px]"
           type="primary"
-          onClick={() => nav('./manage/list')}
+          onClick={() => navigator(MANAGE_LIST)}
         >
           开始使用
         </Button>

@@ -27,7 +27,8 @@ function EditToolbar() {
     moveComponentPosition,
   } = useComponentInfoStore()
 
-  const { undo, redo, pastStates, futureStates } = useComponentInfoStore.temporal.getState()
+  const { undo, redo, pastStates, futureStates } =
+    useComponentInfoStore.temporal.getState()
 
   const [isLocked, setIsLocked] = useState(
     componentList.find((c) => c.fe_id === selectedId)?.isLocked,

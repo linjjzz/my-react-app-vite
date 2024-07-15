@@ -1,3 +1,4 @@
+import { LOGIN } from '@/router'
 import { ResDataType } from '@/services/http'
 import { registInfo, registService } from '@/services/request'
 import { UserAddOutlined } from '@ant-design/icons'
@@ -19,7 +20,7 @@ const tailLayout = {
 
 const Register: FC = () => {
   const [form] = Form.useForm()
-  const nav = useNavigate()
+  const navigator = useNavigate()
 
   const { loading, run: onFinish } = useRequest(
     async (value: registInfo) => {
@@ -36,7 +37,7 @@ const Register: FC = () => {
       manual: true,
       onSuccess: () => {
         message.success('注册成功')
-        nav('/login')
+        navigator(LOGIN)
       },
     },
   )
@@ -98,7 +99,11 @@ const Register: FC = () => {
           <Button type="primary" htmlType="submit" disabled={loading}>
             注册
           </Button>
-          <Button type="link" htmlType="button" onClick={() => nav('/login')}>
+          <Button
+            type="link"
+            htmlType="button"
+            onClick={() => navigator(LOGIN)}
+          >
             已有帐户，登录
           </Button>
         </Space>

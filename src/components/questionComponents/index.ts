@@ -1,13 +1,17 @@
 import { FC } from 'react'
 import QuestionCheckboxConf, {
   QuestionCheckboxPropsType,
+  QuestionCheckboxStatPropsType,
 } from './questionCheckbox'
 import QuestionInfoConf, { QuestionInfoPropsType } from './questionInfo'
 import QuestionInputConf, { QuestionInputPropsType } from './questionInput'
 import QuestionParagraphConf, {
   QuestionParagraphPropsType,
 } from './questionParagraph'
-import QuestionRadioConf, { QuestionRadioPropsType } from './questionRadio'
+import QuestionRadioConf, {
+  QuestionRadioPropsType,
+  QuestionRadioStatPropsType,
+} from './questionRadio'
 import QuestionTextAreaConf, {
   QuestionTextAreaPropsType,
 } from './questionTextArea'
@@ -21,11 +25,15 @@ export type ComponentPropsType = QuestionInputPropsType &
   QuestionRadioPropsType &
   QuestionCheckboxPropsType
 
+export type ComponentStatPropsType = QuestionRadioStatPropsType &
+  QuestionCheckboxStatPropsType
+
 export type ComponentConfType = {
   title: string
   type: string
   Component: FC<ComponentPropsType>
   PropsComponent: FC<ComponentPropsType>
+  StatComponent?: FC<ComponentStatPropsType>
   defaultProps: ComponentPropsType
 }
 

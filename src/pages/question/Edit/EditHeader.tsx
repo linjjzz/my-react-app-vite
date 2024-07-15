@@ -1,3 +1,4 @@
+import { QUESTION_STAT } from '@/router'
 import { editQuestionService } from '@/services/request'
 import { useComponentInfoStore } from '@/store/useComponentInfoStore'
 import { usePageInfoStore } from '@/store/usePageInfoStore'
@@ -45,7 +46,7 @@ function EditHeader() {
       manual: true,
       onSuccess: () => {
         message.success('发布成功')
-        navigator(`/question/stat/${id}`)
+        navigator(`${QUESTION_STAT}/${id}`)
       },
     },
   )

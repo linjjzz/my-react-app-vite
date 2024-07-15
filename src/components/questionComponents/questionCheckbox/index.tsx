@@ -1,6 +1,7 @@
 import { Checkbox, Space, Typography } from 'antd'
 import React, { FC, useState } from 'react'
 import PropsComponent from './PropsComponent'
+import StatComponent from './StatComponent'
 
 const { Paragraph } = Typography
 
@@ -14,6 +15,10 @@ export type QuestionCheckboxPropsType = {
   title?: string
   isVertical?: boolean
   list?: listType[]
+}
+
+export type QuestionCheckboxStatPropsType = {
+  stat: { name: string; count: number }[]
 }
 
 export const defaultQuestionCheckboxProps: QuestionCheckboxPropsType = {
@@ -52,5 +57,6 @@ export default {
   type: 'questionCheckbox',
   Component: QuestionCheckbox,
   PropsComponent,
+  StatComponent,
   defaultProps: defaultQuestionCheckboxProps,
 }

@@ -5,6 +5,7 @@ export type PageInfoType = {
   desc?: string
   js?: string
   css?: string
+  isPublished?: boolean
 }
 
 export type PageStateType = {
@@ -18,6 +19,7 @@ export const usePageInfoStore = create<PageStateType>((set) => ({
     desc: '',
     js: '',
     css: '',
+    isPublished: false,
   },
   resetPageInfo: (props: PageInfoType) =>
     set(() => {

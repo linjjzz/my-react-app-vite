@@ -10,6 +10,7 @@ import { Button, Divider, Modal, Popconfirm, Space, Tag, message } from 'antd'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
+import { QUESTION_EDIT, QUESTION_STAT } from '@/router'
 import {
   ListType,
   duplicateQuestionService,
@@ -21,7 +22,7 @@ const { confirm } = Modal
 
 const QuestionCard = (props: ListType) => {
   const { title, isPublished, createAt, id, isStar, answerCount } = props
-  const nav = useNavigate()
+  const navigator = useNavigate()
   const [isStarState, setIsStarState] = useState(isStar)
 
   const { loading: isStarChnageLoading, run: isStarOnChnage } = useRequest(
@@ -104,7 +105,7 @@ const QuestionCard = (props: ListType) => {
             icon={<EditOutlined />}
             type="text"
             size="small"
-            onClick={() => nav(`/question/edit/${id}`)}
+            onClick={() => navigator(`${QUESTION_EDIT}/${id}`)}
           >
             编辑问卷
           </Button>
@@ -112,7 +113,7 @@ const QuestionCard = (props: ListType) => {
             icon={<LineChartOutlined />}
             type="text"
             size="small"
-            onClick={() => nav(`/question/stat/${id}`)}
+            onClick={() => navigator(`${QUESTION_STAT}/${id}`)}
             disabled={!isPublished}
           >
             问卷统计

@@ -1,5 +1,7 @@
 import useLoadQuestionData from '@/hooks/useLoadQuestionData'
 import { useComponentInfoStore } from '@/store/useComponentInfoStore'
+import { usePageInfoStore } from '@/store/usePageInfoStore'
+import { useTitle } from 'ahooks'
 import { Layout, Spin } from 'antd'
 import React, { FC } from 'react'
 import EditCanvas from './EditCanvas'
@@ -12,6 +14,9 @@ const { Header, Sider, Content } = Layout
 const Edit: FC = () => {
   const { loading } = useLoadQuestionData()
   const { changeSelectedId } = useComponentInfoStore()
+  const { pageInfo } = usePageInfoStore()
+  const { title } = pageInfo
+  useTitle(`问卷统计-${title}`)
 
   const clearSelectedId = () => {
     changeSelectedId('')

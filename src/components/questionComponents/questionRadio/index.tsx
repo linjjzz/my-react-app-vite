@@ -1,6 +1,7 @@
 import { Radio, Space, Typography } from 'antd'
 import React, { FC } from 'react'
 import PropsComponent from './PropsComponent'
+import StatComponent from './StatComponent'
 
 const { Paragraph } = Typography
 
@@ -14,6 +15,10 @@ export type QuestionRadioPropsType = {
   options?: optionType[]
   value?: string
   isVertical?: boolean
+}
+
+export type QuestionRadioStatPropsType = {
+  stat: { name: string; count: number }[]
 }
 
 export const defaultQuestionRadioProps: QuestionRadioPropsType = {
@@ -56,5 +61,6 @@ export default {
   type: 'questionRadio',
   Component: QuestionRadio,
   PropsComponent,
+  StatComponent,
   defaultProps: defaultQuestionRadioProps,
 }

@@ -1,3 +1,4 @@
+import { MANAGE_LIST, MANAGE_STAR, MANAGE_TRASH, QUESTION_EDIT } from '@/router'
 import { createQuestionService } from '@/services/request'
 import {
   BarsOutlined,
@@ -11,7 +12,7 @@ import React, { FC } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 const ManagelLayout: FC = () => {
-  const navigate = useNavigate()
+  const navigator = useNavigate()
   const { pathname } = useLocation()
 
   const {
@@ -22,7 +23,7 @@ const ManagelLayout: FC = () => {
     manual: true,
     onSuccess(result) {
       const { id = '' } = result
-      navigate(`/question/edit/${id}`)
+      navigator(`${QUESTION_EDIT}/${id}`)
     },
   })
 
@@ -41,26 +42,26 @@ const ManagelLayout: FC = () => {
           <Divider className="border-t-transparent" />
 
           <Button
-            type={pathname.startsWith('/manage/list') ? 'default' : 'text'}
+            type={pathname.startsWith(MANAGE_LIST) ? 'default' : 'text'}
             size="large"
             icon={<BarsOutlined />}
-            onClick={() => navigate('/manage/list')}
+            onClick={() => navigator(MANAGE_LIST)}
           >
             我的问卷
           </Button>
           <Button
-            type={pathname.startsWith('/manage/star') ? 'default' : 'text'}
+            type={pathname.startsWith(MANAGE_STAR) ? 'default' : 'text'}
             size="large"
             icon={<StarOutlined />}
-            onClick={() => navigate('/manage/star')}
+            onClick={() => navigator(MANAGE_STAR)}
           >
             星标问卷
           </Button>
           <Button
-            type={pathname.startsWith('/manage/trash') ? 'default' : 'text'}
+            type={pathname.startsWith(MANAGE_TRASH) ? 'default' : 'text'}
             size="large"
             icon={<DeleteOutlined />}
-            onClick={() => navigate('/manage/trash')}
+            onClick={() => navigator(MANAGE_TRASH)}
           >
             回收站
           </Button>

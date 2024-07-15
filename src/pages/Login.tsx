@@ -1,3 +1,4 @@
+import { MANAGE_LIST, REGISTER } from '@/router'
 import { loginInfo, loginService } from '@/services/request'
 import { setToken } from '@/utils/token'
 import { UserAddOutlined } from '@ant-design/icons'
@@ -19,7 +20,7 @@ const tailLayout = {
 
 const Login: FC = () => {
   const [form] = Form.useForm()
-  const nav = useNavigate()
+  const navigator = useNavigate()
 
   const { loading, run: onFinish } = useRequest(
     async (value: loginInfo) => {
@@ -37,7 +38,7 @@ const Login: FC = () => {
         const { token } = data
         setToken(token)
         message.success('登录成功')
-        nav('/manage/list')
+        navigator(MANAGE_LIST)
       },
     },
   )
@@ -92,7 +93,7 @@ const Login: FC = () => {
           <Button
             type="link"
             htmlType="button"
-            onClick={() => nav('/register')}
+            onClick={() => navigator(REGISTER)}
           >
             去注册
           </Button>

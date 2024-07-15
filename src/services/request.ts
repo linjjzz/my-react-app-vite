@@ -75,6 +75,28 @@ export async function registService(body: registInfo): Promise<ResDataType> {
   return data
 }
 
+// 统计
+//
+export async function getQuestionStatListService(
+  questionId: string,
+  opt: { page: number; pageSize: number },
+): Promise<ResDataType> {
+  const data = await http.get<ResDataType>(`/api/stat/${questionId}`, {
+    params: opt,
+  })
+  return data
+}
+
+export async function getComponentStatService(
+  questionId: string,
+  componentId: string,
+): Promise<ResDataType> {
+  const data = await http.get<ResDataType>(
+    `/api/stat/${questionId}/${componentId}`,
+  )
+  return data
+}
+
 // type
 export type searchOption = {
   keyword: string
